@@ -3,15 +3,30 @@ const sectionItems = document.querySelector('#items');
 // On récupère toutes les données de l'api //
 fetch("http://localhost:3000/api/products")
   .then(reponse => reponse.json())
-  .then(function (data) {
-    console.log(data)
-    for(product in data) {
-        sectionItems.innerHTML += `<a href="./product.html?id=42">
-        <article>
-          <img src="${data[product].imageUrl}" alt="${data[product].altTxt}">
-          <h3 class="productName">${data[product].name}</h3>
-          <p class="productDescription">${data[product].description}</p>
-        </article>
-      </a>`
+  .then(data => {
+    for (const products of data){
+      console.log(products);
+ 
+      let listProducts = document.createElement('a');
+      listProducts.setAttribute("href", `./product.html?id=${products._id}`);
+      sectionItems.appendChild(listProducts);
+
+      let articleElement = document.createElement('article');
+      listProducts.appendChild(articleElement);
+
+      let imageElement = document.createElement('img');
+      imageElement.setAttribute("src", products.imageUrl);
+      imageElement.setAttribute("alt", products.altTxt);
+      articleElement.appendChild(imageElement);
+
+      let nomElement = document.createElement('h3');
+      nomElement.setAttribute("class","productName");
+      nomElement.innerText = products.name;
+      articleElement.appendChild(nomElement);
+      
+      let categorieElement = document.createElement('p');
+      categorieElement.setAttribute("class","productDescription");
+      categorieElement.innerText = products.description;
+      articleElement.appendChild(categorieElement);
     }
-  })
+})
