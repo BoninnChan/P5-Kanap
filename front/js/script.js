@@ -30,3 +30,7 @@ fetch("http://localhost:3000/api/products")
       articleElement.appendChild(categorieElement);
     }
 })
+.catch(err => {
+    alert(`Une erreur s'est produite et ne permet pas d'afficher les produits de notre catalogue.`);
+    console.log("Erreur Fetch script.js", err);
+   })
